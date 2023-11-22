@@ -1,12 +1,20 @@
 import React, { useState } from "react";
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View, Platform, Image } from "react-native";
+import {
+	Button as NativeBtn,
+	StyleSheet,
+	Text,
+	View,
+	Platform,
+	Image,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Constants from "expo-constants";
 import { Button } from "react-native-paper";
 
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 import HomeScreen from "./src/screens/HomeScreen";
 import AboutScreen from "./src/screens/AboutScreen";
@@ -15,6 +23,7 @@ import AboutScreen from "./src/screens/AboutScreen";
 
 export default function App() {
 	const Stack = createNativeStackNavigator();
+	const Tab = createBottomTabNavigator();
 
 	const headerConfig = {
 		headerStyle: {
@@ -24,7 +33,7 @@ export default function App() {
 
 	const Logo = () => (
 		<Image
-			style={{ width: 100, height: 50 }}
+			style={{ width: 75, height: 30 }}
 			source={require("./assets/logo-nike.png")}
 		/>
 	);
@@ -43,12 +52,20 @@ export default function App() {
 					},
 				]}>
 				<NavigationContainer>
-					<Stack.Navigator screenOptions={headerConfig}>
+					{/* <Stack.Navigator screenOptions={headerConfig}>
 						<Stack.Screen
 							name='Home'
 							component={HomeScreen}
 							options={{
 								headerTitle: (props) => <Logo {...props} />,
+								headerRight: () => (
+									<NativeBtn
+										title='Btn'
+										color='#000'
+										onPress={() => alert("Btn clicked !")}
+									/>
+								),
+								headerTitleAlign: "center",
 							}}
 						/>
 						<Stack.Screen
@@ -60,9 +77,14 @@ export default function App() {
 								headerTitleStyle: {
 									fontWeight: "100",
 								},
+								headerShown: false,
 							}}
 						/>
-					</Stack.Navigator>
+					</Stack.Navigator> */}
+					<Tab.Navigator>
+						<Tab.Screen name='Home' component={HomeScreen} />
+						<Tab.Screen name='About' component={AboutScreen} />
+					</Tab.Navigator>
 				</NavigationContainer>
 			</SafeAreaView>
 		</View>

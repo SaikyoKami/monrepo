@@ -5,13 +5,13 @@ import { Button } from "react-native-paper";
 import { styles } from "../styles/styles";
 
 const AboutScreen = ({ navigation, route }) => {
-	const { itemId, itemTitle } = route.params;
+	// const { itemId, itemTitle } = route.params;
 
 	return (
 		<View style={styles.screen}>
 			<Text>About Screen</Text>
-			<Text>{itemTitle}</Text>
-			<Text>{itemId}</Text>
+			{/* <Text>{itemTitle}</Text>
+			<Text>{itemId}</Text> */}
 			<Button mode='contained' onPress={() => navigation.goBack()}>
 				Go back
 			</Button>
