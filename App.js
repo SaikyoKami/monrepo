@@ -18,6 +18,12 @@ export default function App() {
 
 	const Stack = createNativeStackNavigator();
 
+	const headerConfig = {
+		headerStyle: {
+			backgroundColor: "#F4511E",
+		},
+	};
+
 	return (
 		<View style={{ flex: 1, backgroundColor: "pink" }}>
 			<StatusBar style='auto' />
@@ -32,13 +38,23 @@ export default function App() {
 					},
 				]}>
 				<NavigationContainer>
-					<Stack.Navigator>
+					<Stack.Navigator screenOptions={headerConfig}>
 						<Stack.Screen
 							name='Home'
 							component={HomeScreen}
 							options={{ title: "Ma page d'accueil" }}
 						/>
-						<Stack.Screen name='About' component={AboutScreen} />
+						<Stack.Screen
+							name='About'
+							component={AboutScreen}
+							options={{
+								title: "About page",
+								headerTintColor: "#FFF",
+								headerTitleStyle: {
+									fontWeight: "100",
+								},
+							}}
+						/>
 					</Stack.Navigator>
 				</NavigationContainer>
 			</SafeAreaView>

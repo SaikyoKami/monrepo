@@ -2,10 +2,11 @@ import React from "react";
 import { Text, View } from "react-native";
 import { Button } from "react-native-paper";
 
+import { styles } from "../styles/styles";
+
 const HomeScreen = ({ navigation }) => {
 	return (
-		<View
-			style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+		<View style={styles.screen}>
 			<Text>Home Screen</Text>
 			<Button
 				mode='contained'
