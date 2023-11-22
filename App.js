@@ -11,6 +11,7 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import Constants from "expo-constants";
 import { Button } from "react-native-paper";
+import Icon from "react-native-vector-icons/Entypo";
 
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -18,6 +19,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 import HomeScreen from "./src/screens/HomeScreen";
 import AboutScreen from "./src/screens/AboutScreen";
+import GeoDataScreen from "./src/screens/GeoDataScreen";
 
 // import { styles } from "./src/styles/styles";
 
@@ -81,9 +83,43 @@ export default function App() {
 							}}
 						/>
 					</Stack.Navigator> */}
-					<Tab.Navigator>
-						<Tab.Screen name='Home' component={HomeScreen} />
-						<Tab.Screen name='About' component={AboutScreen} />
+					<Tab.Navigator
+						initialRouteName='home'
+						screenOptions={{
+							tabBarActiveTintColor: "#000",
+							tabBarInactiveTintColor: "#BBB",
+							tabBarActiveBackgroundColor: "pink",
+							tabBarInactiveBackgroundColor: "yellow",
+						}}>
+						<Tab.Screen
+							name='Home'
+							component={HomeScreen}
+							options={{
+								tabBarLabel: "Accueil",
+								tabBarIcon: () => (
+									<Icon name='home' size={20} />
+								),
+							}}
+						/>
+						<Tab.Screen
+							name='About'
+							component={AboutScreen}
+							options={{
+								tabBarIcon: () => (
+									<Icon name='message' size={20} />
+								),
+								tabBarBadge: 3,
+							}}
+						/>
+						<Tab.Screen
+							name='GeoData'
+							component={GeoDataScreen}
+							options={{
+								tabBarIcon: () => (
+									<Icon name='globe' size={20} />
+								),
+							}}
+						/>
 					</Tab.Navigator>
 				</NavigationContainer>
 			</SafeAreaView>
