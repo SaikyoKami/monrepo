@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View, Platform } from "react-native";
+import { StyleSheet, Text, View, Platform, Image } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Constants from "expo-constants";
 import { Button } from "react-native-paper";
@@ -14,8 +14,6 @@ import AboutScreen from "./src/screens/AboutScreen";
 // import { styles } from "./src/styles/styles";
 
 export default function App() {
-	const [count, setCount] = useState(0);
-
 	const Stack = createNativeStackNavigator();
 
 	const headerConfig = {
@@ -23,6 +21,13 @@ export default function App() {
 			backgroundColor: "#F4511E",
 		},
 	};
+
+	const Logo = () => (
+		<Image
+			style={{ width: 100, height: 50 }}
+			source={require("./assets/logo-nike.png")}
+		/>
+	);
 
 	return (
 		<View style={{ flex: 1, backgroundColor: "pink" }}>
@@ -42,7 +47,9 @@ export default function App() {
 						<Stack.Screen
 							name='Home'
 							component={HomeScreen}
-							options={{ title: "Ma page d'accueil" }}
+							options={{
+								headerTitle: (props) => <Logo {...props} />,
+							}}
 						/>
 						<Stack.Screen
 							name='About'
