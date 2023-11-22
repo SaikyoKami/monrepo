@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, View, Image, TextInput } from "react-native";
+import { Text, View, Image, TextInput, StyleSheet } from "react-native";
 import { Button } from "react-native-paper";
 
 import { styles } from "../styles/styles";
@@ -34,10 +34,24 @@ const GeoDataScreen = ({ navigation }) => {
 		<View style={styles.screen}>
 			<Text>GeoData Screen</Text>
 			{data && <Text>{data.temp}</Text>}
-			<TextInput onChangeText={onChangeCity} value={city} />
+			<TextInput
+				style={styles2.input}
+				placeholder='city'
+				onChangeText={onChangeCity}
+				value={city}
+			/>
 			<Button onPress={handleSubmit}>Send</Button>
 		</View>
 	);
 };
+
+const styles2 = StyleSheet.create({
+	input: {
+		borderWidth: 1,
+		borderColor: "#FFF",
+		width: 150,
+		color: "#FFF",
+	},
+});
 
 export default GeoDataScreen;
