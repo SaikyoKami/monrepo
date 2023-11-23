@@ -14,14 +14,16 @@ import { styles } from "../styles/styles";
 const GeoDataScreen = ({ navigation }) => {
 	const [cities, setCities] = React.useState([]);
 	const [city, setCity] = React.useState("");
-	const [data, setData] = React.useState(null);
+	const [data, setData] = React.useState();
 	const [loading, setLoading] = React.useState(false);
 	const API_KEY = "wd1m2cacHhIDqPnlXsqBGw==zrfEMuKmaO0dkJD2";
 
 	React.useEffect(() => {
 		console.log(data);
-		const newCities = [...cities, data[0]];
-		setCities(newCities);
+		if (data) {
+			const newCities = [...cities, data[0]];
+			setCities(newCities);
+		}
 	}, [data]);
 
 	const fetchData = async () => {
