@@ -15,18 +15,17 @@ import Icon from "react-native-vector-icons/Entypo";
 
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 import HomeScreen from "./src/screens/HomeScreen";
 import AboutScreen from "./src/screens/AboutScreen";
 import GeoDataScreen from "./src/screens/GeoDataScreen";
+import MeteoScreen from "./src/screens/MeteoScreen";
 import MapScreen from "./src/screens/MapScreen";
 
 // import { styles } from "./src/styles/styles";
 
 export default function App() {
 	const Stack = createNativeStackNavigator();
-	const Tab = createBottomTabNavigator();
 
 	const headerConfig = {
 		headerStyle: {
@@ -55,7 +54,7 @@ export default function App() {
 					},
 				]}>
 				<NavigationContainer>
-					{/* <Stack.Navigator screenOptions={headerConfig}>
+					<Stack.Navigator screenOptions={headerConfig}>
 						<Stack.Screen
 							name='Home'
 							component={HomeScreen}
@@ -72,19 +71,29 @@ export default function App() {
 							}}
 						/>
 						<Stack.Screen
-							name='About'
-							component={AboutScreen}
+							name='GeoData'
+							component={GeoDataScreen}
 							options={{
-								title: "About page",
+								title: "Geo Data page",
 								headerTintColor: "#FFF",
 								headerTitleStyle: {
 									fontWeight: "100",
 								},
-								headerShown: false,
 							}}
 						/>
-					</Stack.Navigator> */}
-					<Tab.Navigator
+						<Stack.Screen
+							name='Meteo'
+							component={MeteoScreen}
+							options={{
+								title: "Meteo page",
+								headerTintColor: "#FFF",
+								headerTitleStyle: {
+									fontWeight: "100",
+								},
+							}}
+						/>
+					</Stack.Navigator>
+					{/* <Tab.Navigator
 						initialRouteName='home'
 						screenOptions={{
 							tabBarActiveTintColor: "#000",
@@ -121,6 +130,16 @@ export default function App() {
 								),
 							}}
 						/>
+
+						<Tab.Screen
+							name='Meteo'
+							component={MeteoScreen}
+							options={{
+								tabBarIcon: () => (
+									<Icon name='layers' size={20} />
+								),
+							}}
+						/>
 						<Tab.Screen
 							name='Map'
 							component={MapScreen}
@@ -130,7 +149,7 @@ export default function App() {
 								),
 							}}
 						/>
-					</Tab.Navigator>
+					</Tab.Navigator> */}
 				</NavigationContainer>
 			</SafeAreaView>
 		</View>

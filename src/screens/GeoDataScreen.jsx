@@ -52,6 +52,7 @@ const GeoDataScreen = ({ navigation }) => {
 		console.log("clicked");
 		console.log(city);
 		fetchData();
+		setCity("");
 		// console.log(data);
 	};
 
@@ -61,19 +62,29 @@ const GeoDataScreen = ({ navigation }) => {
 			<View style={{ flex: 1 }}>
 				<FlatList
 					data={cities}
-					keyExtractor={(item) => item.dt}
+					keyExtractor={() => Math.random()}
 					renderItem={({ item }) => (
-						<View>
+						<View style={{ flexDirection: "row", marginBottom: 5 }}>
 							<Text style={{ color: "#FFF", fontSize: 24 }}>
 								{item.name}
 							</Text>
+							<Button
+								mode='contained'
+								onPress={() =>
+									navigation.navigate("Meteo", {
+										city: item.name,
+									})
+								}>
+								Voir Meteo
+							</Button>
+							<Button mode='contained'>X</Button>
 						</View>
 					)}
 				/>
 				{loading && <Text style={{ color: "#FFF" }}>Loading ...</Text>}
 			</View>
 			<View style={{ flex: 1 }}>
-				{data && <Text>{data.temp}</Text>}
+				{/* {data && <Text>{data.temp}</Text>} */}
 				<TextInput
 					style={styles2.input}
 					placeholder='city'
@@ -92,6 +103,7 @@ const styles2 = StyleSheet.create({
 		borderColor: "#FFF",
 		width: 150,
 		color: "#FFF",
+		height: 50,
 	},
 });
 

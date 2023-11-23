@@ -12,7 +12,9 @@ const AboutScreen = ({ navigation, route }) => {
 			<Text>About Screen</Text>
 			{/* <Text>{itemTitle}</Text>
 			<Text>{itemId}</Text> */}
-			<Button mode='contained' onPress={() => navigation.goBack()}>
+			<Button
+				mode='contained'
+				onPress={() => navigation.navigate("Home")}>
 				Go back
 			</Button>
 			<Button
