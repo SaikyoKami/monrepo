@@ -20,6 +20,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import HomeScreen from "./src/screens/HomeScreen";
 import AboutScreen from "./src/screens/AboutScreen";
 import GeoDataScreen from "./src/screens/GeoDataScreen";
+import MapScreen from "./src/screens/MapScreen";
 
 // import { styles } from "./src/styles/styles";
 
@@ -117,6 +118,15 @@ export default function App() {
 							options={{
 								tabBarIcon: () => (
 									<Icon name='globe' size={20} />
+								),
+							}}
+						/>
+						<Tab.Screen
+							name='Map'
+							component={MapScreen}
+							options={{
+								tabBarIcon: () => (
+									<Icon name='layers' size={20} />
 								),
 							}}
 						/>
