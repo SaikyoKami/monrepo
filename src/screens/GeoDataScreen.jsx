@@ -7,7 +7,10 @@ import {
 	StyleSheet,
 	FlatList,
 } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Button } from "react-native-paper";
+
+import Title from "../components/Title";
 
 import { styles } from "../styles/styles";
 
@@ -19,13 +22,44 @@ const GeoDataScreen = ({ navigation }) => {
 	const [error, setError] = React.useState("");
 	const API_KEY = "wd1m2cacHhIDqPnlXsqBGw==zrfEMuKmaO0dkJD2";
 
+	// storing data
+	const storeData = async (value) => {
+		try {
+			await AsyncStorage.setItem("cities", JSON.stringify(value));
+		} catch (error) {
+			console.log(error);
+		}
+	};
+
+	//getting data
+	const getData = async () => {
+		try {
+			const citiesData = JSON.parse(await AsyncStorage.getItem("cities"));
+			setCities(citiesData);
+		} catch (error) {
+			console.log(error);
+		}
+	};
+
+	React.useEffect(() => {
+		// console.log(data);
+		getData();
+	}, []);
+
 	React.useEffect(() => {
 		// console.log(data);
 		if (data) {
 			const newCities = [...cities, data[0]];
 			setCities(newCities);
+			storeData(newCities);
 		}
 	}, [data]);
+
+	const handleDelete = (cityName) => {
+		const updatedCities = cities.filter((c) => c.name != cityName);
+		setCities(updatedCities);
+		storeData(updatedCities);
+	};
 
 	const fetchData = async () => {
 		try {
@@ -74,7 +108,7 @@ const GeoDataScreen = ({ navigation }) => {
 
 	return (
 		<View style={styles.screen}>
-			<Text>GeoData Screen</Text>
+			<Title content='GeoData Screen' couleur='red' size={32} />
 			<View style={{ flex: 4 }}>
 				<FlatList
 					data={cities}
@@ -93,7 +127,11 @@ const GeoDataScreen = ({ navigation }) => {
 								}>
 								Voir Meteo
 							</Button>
-							<Button mode='contained'>X</Button>
+							<Button
+								mode='contained'
+								onPress={() => handleDelete(item.name)}>
+								X
+							</Button>
 						</View>
 					)}
 				/>
