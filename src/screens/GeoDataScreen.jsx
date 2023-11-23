@@ -13,73 +13,69 @@ import { styles } from "../styles/styles";
 
 const GeoDataScreen = ({ navigation }) => {
 	const [cities, setCities] = React.useState([]);
-	const [city, onChangeCity] = React.useState("");
+	const [city, setCity] = React.useState("");
 	const [data, setData] = React.useState(null);
+	const [loading, setLoading] = React.useState(false);
 	const API_KEY = "wd1m2cacHhIDqPnlXsqBGw==zrfEMuKmaO0dkJD2";
+
+	React.useEffect(() => {
+		console.log(data);
+		const newCities = [...cities, data[0]];
+		setCities(newCities);
+	}, [data]);
 
 	const fetchData = async () => {
 		try {
+			setLoading(true);
 			const response = await fetch(
-				`https://api.api-ninjas.com/v1/weather?city=${city}`,
+				`https://api.api-ninjas.com/v1/geocoding?city=${city}`,
 				{
-					headers: { "X-Api-Key": API_KEY },
-					contentType: "application/json",
+					headers: {
+						"X-Api-Key": API_KEY,
+						contentType: "application/json",
+					},
 				}
 			);
 			const dataJson = await response.json();
+			setLoading(false);
 			setData(dataJson);
+			console.log("datajson : ", dataJson);
 		} catch (error) {
-			alert(error);
+			console.error(error);
+			setLoading(false);
 		}
 	};
 
-	// const fetchData = async () => {
-	// 	try {
-	// 		const response = await fetch(
-	// 			`https://api.api-ninjas.com/v1/geocoding?city=${city}`,
-	// 			{
-	// 				method: "GET",
-	// 				headers: { "X-Api-Key": API_KEY },
-	// 				contentType: "application/json",
-	// 			}
-	// 		);
-	// 		const dataJson = await response.json();
-	// 		alert(dataJson);
-	// 		setCities(dataJson);
-	// 	} catch (error) {
-	// 		alert(error);
-	// 	}
-	// };
-
 	const handleSubmit = () => {
+		console.log("clicked");
+		console.log(city);
 		fetchData();
 		// console.log(data);
 	};
 
-	React.useEffect(() => {
-		console.log(data);
-	}, [data]);
-
 	return (
 		<View style={styles.screen}>
 			<Text>GeoData Screen</Text>
-			{/* <View style={{ flex: 1 }}>
+			<View style={{ flex: 1 }}>
 				<FlatList
 					data={cities}
 					keyExtractor={(item) => item.dt}
 					renderItem={({ item }) => (
 						<View>
-							<Text>{item.name}</Text>
+							<Text style={{ color: "#FFF", fontSize: 24 }}>
+								{item.name}
+							</Text>
 						</View>
 					)}
 				/>
-			</View> */}
+				{loading && <Text style={{ color: "#FFF" }}>Loading ...</Text>}
+			</View>
 			<View style={{ flex: 1 }}>
 				{data && <Text>{data.temp}</Text>}
 				<TextInput
 					style={styles2.input}
 					placeholder='city'
-					onChangeText={onChangeCity}
+					onChangeText={setCity}
 					value={city}
 				/>
 				<Button onPress={handleSubmit}>Send</Button>
