@@ -48,8 +48,12 @@ const GeoDataScreen = ({ navigation }) => {
 
 	React.useEffect(() => {
 		// console.log(data);
-		if (data) {
+		if (data && cities) {
 			const newCities = [...cities, data[0]];
+			setCities(newCities);
+			storeData(newCities);
+		} else if (data && !cities) {
+			const newCities = [data[0]];
 			setCities(newCities);
 			storeData(newCities);
 		}
@@ -90,7 +94,11 @@ const GeoDataScreen = ({ navigation }) => {
 	};
 
 	const handleSubmit = () => {
-		if (city) {
+		if (city && !cities) {
+			fetchData();
+			setCity("");
+			setError("");
+		} else if (city) {
 			const result = cities.filter((c) => c.name === city);
 			// console.log(city);
 			console.log(result);
