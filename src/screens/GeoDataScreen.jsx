@@ -16,10 +16,11 @@ const GeoDataScreen = ({ navigation }) => {
 	const [city, setCity] = React.useState("");
 	const [data, setData] = React.useState();
 	const [loading, setLoading] = React.useState(false);
+	const [error, setError] = React.useState("");
 	const API_KEY = "wd1m2cacHhIDqPnlXsqBGw==zrfEMuKmaO0dkJD2";
 
 	React.useEffect(() => {
-		console.log(data);
+		// console.log(data);
 		if (data) {
 			const newCities = [...cities, data[0]];
 			setCities(newCities);
@@ -40,8 +41,14 @@ const GeoDataScreen = ({ navigation }) => {
 			);
 			const dataJson = await response.json();
 			setLoading(false);
-			setData(dataJson);
-			console.log("datajson : ", dataJson);
+			if (dataJson.length == 0) {
+				setError("Cette ville n'existe pas Hmar !");
+				// console.error("Cette ville n'existe pas Hmar !");
+			} else {
+				setData(dataJson);
+				setError("");
+			}
+			// console.log("datajson : ", dataJson);
 		} catch (error) {
 			console.error(error);
 			setLoading(false);
@@ -49,22 +56,31 @@ const GeoDataScreen = ({ navigation }) => {
 	};
 
 	const handleSubmit = () => {
-		console.log("clicked");
-		console.log(city);
-		fetchData();
-		setCity("");
-		// console.log(data);
+		if (city) {
+			const result = cities.filter((c) => c.name === city);
+			// console.log(city);
+			console.log(result);
+			if (result.length === 0) {
+				fetchData();
+				setCity("");
+				setError("");
+			} else {
+				setError("La ville existe deja");
+			}
+		} else {
+			setError("Vide");
+		}
 	};
 
 	return (
 		<View style={styles.screen}>
 			<Text>GeoData Screen</Text>
-			<View style={{ flex: 1 }}>
+			<View style={{ flex: 4 }}>
 				<FlatList
 					data={cities}
 					keyExtractor={() => Math.random()}
 					renderItem={({ item }) => (
-						<View style={{ flexDirection: "row", marginBottom: 5 }}>
+						<View style={styles2.card}>
 							<Text style={{ color: "#FFF", fontSize: 24 }}>
 								{item.name}
 							</Text>
@@ -83,15 +99,17 @@ const GeoDataScreen = ({ navigation }) => {
 				/>
 				{loading && <Text style={{ color: "#FFF" }}>Loading ...</Text>}
 			</View>
-			<View style={{ flex: 1 }}>
-				{/* {data && <Text>{data.temp}</Text>} */}
+			<View style={{ flex: 1, width: "100%", padding: 15 }}>
+				{error && <Text style={styles2.error}>{error}</Text>}
 				<TextInput
 					style={styles2.input}
 					placeholder='city'
 					onChangeText={setCity}
 					value={city}
 				/>
-				<Button onPress={handleSubmit}>Send</Button>
+				<Button mode='contained' onPress={handleSubmit}>
+					Send
+				</Button>
 			</View>
 		</View>
 	);
@@ -101,9 +119,22 @@ const styles2 = StyleSheet.create({
 	input: {
 		borderWidth: 1,
 		borderColor: "#FFF",
-		width: 150,
+		width: "100%",
 		color: "#FFF",
 		height: 50,
+		marginBottom: 15,
+		paddingHorizontal: 15,
+	},
+	card: {
+		flexDirection: "row",
+		borderWidth: 1,
+		borderColor: "#FFF",
+		padding: 30,
+		marginBottom: 15,
+	},
+	error: {
+		color: "red",
+		fontSize: 24,
 	},
 });
 

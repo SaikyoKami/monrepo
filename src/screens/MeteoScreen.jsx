@@ -43,11 +43,6 @@ const MeteoScreen = ({ route, navigation }) => {
 		<View>
 			<Text style={{ fontSize: 24 }}>Meteo de {city}</Text>
 			{data && <Text>{data.temp}</Text>}
-			<Button
-				mode='contained'
-				onPress={() => navigation.navigate("GeoData")}>
-				Go back
-			</Button>
 		</View>
 	);
 };
