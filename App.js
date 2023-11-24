@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { StatusBar } from "expo-status-bar";
 import {
-	Button as NativeBtn,
-	StyleSheet,
-	Text,
-	View,
-	Platform,
-	Image,
+  Button as NativeBtn,
+  StyleSheet,
+  Text,
+  View,
+  Platform,
+  Image,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Constants from "expo-constants";
@@ -20,80 +20,94 @@ import HomeScreen from "./src/screens/HomeScreen";
 import AboutScreen from "./src/screens/AboutScreen";
 import GeoDataScreen from "./src/screens/GeoDataScreen";
 import MeteoScreen from "./src/screens/MeteoScreen";
+import WeatherScreen from "./src/screens/WeatherScreen";
 import MapScreen from "./src/screens/MapScreen";
+import QrCodeScreen from "./src/screens/QrCodeScreen";
+import ImageDetectionScreen from "./src/screens/ImageDetectionScreen";
 
 // import { styles } from "./src/styles/styles";
 
 export default function App() {
-	const Stack = createNativeStackNavigator();
+  const Stack = createNativeStackNavigator();
 
-	const headerConfig = {
-		headerStyle: {
-			backgroundColor: "#F4511E",
-		},
-	};
+  const headerConfig = {
+    headerStyle: {
+      backgroundColor: "#FFF",
+    },
+  };
 
-	const Logo = () => (
-		<Image
-			style={{ width: 75, height: 30 }}
-			source={require("./assets/logo-nike.png")}
-		/>
-	);
+  const Logo = () => (
+    <Image
+      style={{ width: 30, height: 30 }}
+      source={require("./assets/jujutsu.png")}
+    />
+  );
 
-	return (
-		<View style={{ flex: 1, backgroundColor: "pink" }}>
-			<StatusBar style='auto' />
-			<SafeAreaView
-				style={[
-					styles.container,
-					{
-						paddingTop:
-							Platform.OS != "ios"
-								? 0
-								: Constants.statusBarHeight,
-					},
-				]}>
-				<NavigationContainer>
-					<Stack.Navigator screenOptions={headerConfig}>
-						<Stack.Screen
-							name='Home'
-							component={HomeScreen}
-							options={{
-								headerTitle: (props) => <Logo {...props} />,
-								headerRight: () => (
-									<NativeBtn
-										title='Btn'
-										color='#000'
-										onPress={() => alert("Btn clicked !")}
-									/>
-								),
-								headerTitleAlign: "center",
-							}}
-						/>
-						<Stack.Screen
-							name='GeoData'
-							component={GeoDataScreen}
-							options={{
-								title: "Geo Data page",
-								headerTintColor: "#FFF",
-								headerTitleStyle: {
-									fontWeight: "100",
-								},
-							}}
-						/>
-						<Stack.Screen
-							name='Meteo'
-							component={MeteoScreen}
-							options={{
-								title: "Meteo page",
-								headerTintColor: "#FFF",
-								headerTitleStyle: {
-									fontWeight: "100",
-								},
-							}}
-						/>
-					</Stack.Navigator>
-					{/* <Tab.Navigator
+  return (
+    <View style={{ flex: 1 }}>
+      <StatusBar style="auto" />
+      <SafeAreaView
+        style={[
+          styles.container,
+          {
+            paddingTop: Platform.OS != "ios" ? 0 : Constants.statusBarHeight,
+          },
+        ]}
+      >
+        <NavigationContainer>
+          <Stack.Navigator screenOptions={headerConfig}>
+            <Stack.Screen
+              name="Home"
+              component={HomeScreen}
+              options={{
+                headerTitle: (props) => <Logo {...props} />,
+                headerRight: () => (
+                  <NativeBtn
+                    title="Btn"
+                    color="#000"
+                    onPress={() => alert("Btn clicked !")}
+                  />
+                ),
+                headerTitleAlign: "center",
+              }}
+            />
+            <Stack.Screen
+              name="GeoData"
+              component={GeoDataScreen}
+              options={{
+                title: "Geo Data page",
+                headerTintColor: "#FFF",
+                headerTitleStyle: {
+                  fontWeight: "100",
+                },
+              }}
+            />
+            <Stack.Screen
+              name="Meteo"
+              component={MeteoScreen}
+              options={{
+                title: "Meteo page",
+                headerTintColor: "#FFF",
+                headerTitleStyle: {
+                  fontWeight: "100",
+                },
+              }}
+            />
+            <Stack.Screen
+              name="Weather"
+              component={WeatherScreen}
+              options={{
+                title: "Weather page",
+                headerTintColor: "#FFF",
+                headerTitleStyle: {
+                  fontWeight: "100",
+                },
+              }}
+            />
+            <Stack.Screen name="QrCode" component={QrCodeScreen} />
+            <Stack.Screen name="Image" component={ImageDetectionScreen} />
+          </Stack.Navigator>
+          {/* <Tab.Navigator
 						initialRouteName='home'
 						screenOptions={{
 							tabBarActiveTintColor: "#000",
@@ -150,29 +164,29 @@ export default function App() {
 							}}
 						/>
 					</Tab.Navigator> */}
-				</NavigationContainer>
-			</SafeAreaView>
-		</View>
-	);
+        </NavigationContainer>
+      </SafeAreaView>
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
-	title: {
-		fontSize: 24,
-		fontWeight: "bold",
-		color: "white",
-	},
-	container: {
-		flex: 1,
-		flexDirection: "column",
-		// backgroundColor: "#fff",
-		// alignItems: "center",
-		// justifyContent: "center",
-		// padding: 15,
-	},
-	box: {
-		// height: 100,
-		// width: 100,
-		flex: 1,
-	},
+  title: {
+    fontSize: 24,
+    fontWeight: "bold",
+    color: "white",
+  },
+  container: {
+    flex: 1,
+    flexDirection: "column",
+    // backgroundColor: "#fff",
+    // alignItems: "center",
+    // justifyContent: "center",
+    // padding: 15,
+  },
+  box: {
+    // height: 100,
+    // width: 100,
+    flex: 1,
+  },
 });

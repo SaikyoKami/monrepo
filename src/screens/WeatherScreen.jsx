@@ -5,7 +5,7 @@ import { useFocusEffect } from "@react-navigation/native";
 
 import Icon from "react-native-vector-icons/Ionicons";
 
-const MeteoScreen = ({ route, navigation }) => {
+const WeatherScreen = ({ route, navigation }) => {
   const [loading, setLoading] = React.useState(false);
   const { city } = route.params;
   const [data, setData] = React.useState();
@@ -23,10 +23,9 @@ const MeteoScreen = ({ route, navigation }) => {
     try {
       setLoading(true);
       const response = await fetch(
-        `https://api.api-ninjas.com/v1/weather?city=${city}`,
+        `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=ed48a34f8d27959074824d85648fa4a6`,
         {
           headers: {
-            "X-Api-Key": API_KEY,
             contentType: "application/json",
           },
         }
@@ -62,14 +61,20 @@ const MeteoScreen = ({ route, navigation }) => {
         <Text>Loading ...</Text>
       ) : (
         <View style={{ padding: 15 }}>
-          {data && (
-            <>
-              <IconWeather pct={data.cloud_pct} />
-              <Text variant="headlineMedium">{data.temp + "°C"}</Text>
-              <Text>Humidité</Text>
-              <ProgressBar progress={data.humidity / 100} color={"#000"} />
-            </>
-          )}
+          {/* {data && (
+						<>
+							<IconWeather pct={data.cloud_pct} />
+							<Text variant='headlineMedium'>
+								{data.temp + "°C"}
+							</Text>
+							<Text>Humidity</Text>
+							<ProgressBar
+								progress={data.humidity / 100}
+								color={"#000"}
+							/>
+						</>
+					)} */}
+          {data && <Text>{data.weather[0].main}</Text>}
           <Button onPress={() => navigation.goBack()}>Retour</Button>
         </View>
       )}
@@ -77,4 +82,4 @@ const MeteoScreen = ({ route, navigation }) => {
   );
 };
 
-export default MeteoScreen;
+export default WeatherScreen;
